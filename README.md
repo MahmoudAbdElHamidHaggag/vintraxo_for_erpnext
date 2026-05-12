@@ -30,11 +30,11 @@ It is not a static ERP mobile app, but rather a **Dynamic Runtime ERP Platform**
 - **Networking:** Implemented `MetadataRepository` and `ERPNextMetadataRepository` to fetch metadata from ERPNext.
 - **Dependency Graph Engine:** Built the `MetadataDependencyGraph` to analyze DocTypes, extract relational dependencies (Link, Table), and compute a safe loading order using topological sorting.
 
-### ⏳ Phase 3: Local Metadata Cache & Schema Versioning (Next)
-- [ ] Integrate Drift database.
-- [ ] Build schema version tracking and caching logic (`metadata_version`, `schema_hash`).
+### ✅ Phase 3: Local Metadata Cache & Schema Versioning
+- **Database:** Integrated Drift SQLite local database.
+- **Caching & Hashing:** Built the `SchemaVersioningService` with `generateSchemaHash` using `SHA-256` to detect schema changes before unnecessarily downloading data from ERPNext.
 
-### ⏳ Phase 4: Internal UI Schema Engine
+### 🏗️ Phase 4: Internal UI Schema Engine (In Progress)
 - [ ] Develop the translation layer from ERPNext JSON structures to the abstract Internal UI Schema.
 
 ### ⏳ Phase 5: Widget Factory & Dynamic Form Renderer

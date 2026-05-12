@@ -4,7 +4,7 @@ part 'module_def.freezed.dart';
 part 'module_def.g.dart';
 
 @freezed
-class ModuleDef with _$ModuleDef {
+abstract class ModuleDef with _$ModuleDef {
   const factory ModuleDef({
     @JsonKey(name: 'module_name') required String moduleName,
     String? appName,

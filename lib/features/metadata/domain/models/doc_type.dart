@@ -5,7 +5,7 @@ part 'doc_type.freezed.dart';
 part 'doc_type.g.dart';
 
 @freezed
-class DocType with _$DocType {
+abstract class DocType with _$DocType {
   const factory DocType({
     required String name,
     required String module,

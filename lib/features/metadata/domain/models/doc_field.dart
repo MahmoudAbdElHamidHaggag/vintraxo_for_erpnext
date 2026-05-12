@@ -4,7 +4,7 @@ part 'doc_field.freezed.dart';
 part 'doc_field.g.dart';
 
 @freezed
-class DocField with _$DocField {
+abstract class DocField with _$DocField {
   const factory DocField({
     required String fieldname,
     required String fieldtype,
