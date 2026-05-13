@@ -23,4 +23,6 @@ abstract class MetadataRepository {
     int? limitStart,
     int? limitLength,
   });
+  /// Fetches DocTypes belonging to a specific module.
+  Future<List<String>> getDocTypesByModule(String moduleName);
 }

@@ -9,7 +9,7 @@ part of 'doc_field.dart';
 _DocField _$DocFieldFromJson(Map<String, dynamic> json) => _DocField(
   fieldname: json['fieldname'] as String,
   fieldtype: json['fieldtype'] as String,
-  label: json['label'] as String,
+  label: json['label'] as String?,
   reqd: (json['reqd'] as num?)?.toInt(),
   hidden: (json['hidden'] as num?)?.toInt(),
   readOnly: (json['readOnly'] as num?)?.toInt(),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vintraxo_for_erpnext/features/auth/presentation/providers/domain_provider.dart';
+import 'package:vintraxo_for_erpnext/features/auth/presentation/providers/proxy_provider.dart';
+import 'package:flutter/foundation.dart';
 
 class DomainEntryScreen extends ConsumerStatefulWidget {
   const DomainEntryScreen({super.key});
@@ -13,10 +15,12 @@ class DomainEntryScreen extends ConsumerStatefulWidget {
 class _DomainEntryScreenState extends ConsumerState<DomainEntryScreen> {
   final _formKey = GlobalKey<FormState>();
   final _domainController = TextEditingController();
+  final _proxyController = TextEditingController();
 
   @override
   void dispose() {
     _domainController.dispose();
+    _proxyController.dispose();
     super.dispose();
   }
 
@@ -27,6 +31,12 @@ class _DomainEntryScreenState extends ConsumerState<DomainEntryScreen> {
         domain = 'https://$domain';
       }
       ref.read(domainProvider.notifier).setDomain(domain);
+      
+      if (kIsWeb) {
+        final proxy = _proxyController.text.trim();
+        ref.read(proxyProvider.notifier).setProxy(proxy.isNotEmpty ? proxy : null);
+      }
+      
       context.go('/login');
     }
   }
@@ -78,6 +88,26 @@ class _DomainEntryScreenState extends ConsumerState<DomainEntryScreen> {
                         },
                         onFieldSubmitted: (_) => _submit(),
                       ),
+                      if (kIsWeb) ...[
+                        const SizedBox(height: 16),
+                        ExpansionTile(
+                          title: const Text('Advanced Options (Web)', style: TextStyle(fontSize: 14)),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: TextFormField(
+                                controller: _proxyController,
+                                decoration: const InputDecoration(
+                                  labelText: 'CORS Proxy URL (Optional)',
+                                  hintText: 'e.g., https://cors-anywhere.herokuapp.com/',
+                                  prefixIcon: Icon(Icons.security),
+                                ),
+                                keyboardType: TextInputType.url,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: _submit,

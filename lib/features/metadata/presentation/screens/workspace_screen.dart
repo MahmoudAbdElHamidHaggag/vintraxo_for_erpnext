@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vintraxo_for_erpnext/features/metadata/domain/models/report_models.dart';
+import 'package:vintraxo_for_erpnext/features/metadata/presentation/providers/metadata_providers.dart';
 import 'package:vintraxo_for_erpnext/features/ui_schema/presentation/widgets/dashboard/chart_factory.dart';
 import 'package:vintraxo_for_erpnext/features/ui_schema/presentation/widgets/dashboard/number_card_widget.dart';
 
-class WorkspaceScreen extends StatelessWidget {
+class WorkspaceScreen extends ConsumerWidget {
   final String moduleName;
 
   const WorkspaceScreen({super.key, required this.moduleName});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text('$moduleName Workspace'),
@@ -24,7 +26,7 @@ class WorkspaceScreen extends StatelessWidget {
             const SizedBox(height: 24),
             _buildQuickLinks(context),
             const SizedBox(height: 24),
-            _buildMasters(context),
+            _buildMasters(context, ref),
           ],
         ),
       ),
@@ -124,7 +126,9 @@ class WorkspaceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMasters(BuildContext context) {
+  Widget _buildMasters(BuildContext context, WidgetRef ref) {
+    final docTypesAsync = ref.watch(moduleDocTypesProvider(moduleName));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -133,13 +137,11 @@ class WorkspaceScreen extends StatelessWidget {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
-        _buildDocTypeList(context, [
-          'User',
-          'Role',
-          'Company',
-          'Task',
-          'Project',
-        ]),
+        docTypesAsync.when(
+          data: (docTypes) => _buildDocTypeList(context, docTypes),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, stack) => Text('Error loading DocTypes: $err'),
+        ),
       ],
     );
   }
@@ -168,6 +170,9 @@ class WorkspaceScreen extends StatelessWidget {
   }
 
   Widget _buildDocTypeList(BuildContext context, List<String> docTypes) {
+    if (docTypes.isEmpty) {
+      return const Text('No DocTypes found for this module.');
+    }
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

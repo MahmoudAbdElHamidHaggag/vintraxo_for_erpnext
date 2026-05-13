@@ -103,4 +103,26 @@ class ERPNextMetadataRepository implements MetadataRepository {
       throw Exception('Failed to fetch documents for $docTypeName: $e');
     }
   }
+
+  @override
+  Future<List<String>> getDocTypesByModule(String moduleName) async {
+    try {
+      final response = await dio.get(
+        '/api/resource/DocType',
+        queryParameters: {
+          'filters': jsonEncode([['module', '=', moduleName], ['istable', '=', 0], ['issingle', '=', 0]]),
+          'fields': '["name"]',
+          'limit_page_length': 0,
+        },
+      );
+
+      if (response.statusCode == 200 && response.data['data'] != null) {
+        final List<dynamic> data = response.data['data'];
+        return data.map((r) => r['name'] as String).toList();
+      }
+      return [];
+    } catch (e) {
+      throw Exception('Failed to fetch DocTypes for module $moduleName: $e');
+    }
+  }
 }

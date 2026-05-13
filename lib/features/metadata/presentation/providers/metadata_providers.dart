@@ -19,3 +19,8 @@ final modulesProvider = FutureProvider<List<ModuleDef>>((ref) async {
   final repository = ref.watch(metadataRepositoryProvider);
   return repository.getModules();
 });
+
+final moduleDocTypesProvider = FutureProvider.family<List<String>, String>((ref, moduleName) async {
+  final repository = ref.watch(metadataRepositoryProvider);
+  return repository.getDocTypesByModule(moduleName);
+});

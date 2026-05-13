@@ -8,7 +8,7 @@ abstract class DocField with _$DocField {
   const factory DocField({
     required String fieldname,
     required String fieldtype,
-    required String label,
+    String? label,
     int? reqd,
     int? hidden,
     int? readOnly,

@@ -15,11 +15,10 @@ class SchemaTranslator {
 
       if (widget.type == WidgetType.section) {
         currentSection = widget.copyWith(children: []);
-        currentColumn = null; // Reset column when a new section starts
+        currentColumn = null;
         rootWidgets.add(currentSection);
       } else if (widget.type == WidgetType.column) {
         if (currentSection == null) {
-          // If no section exists yet, create a default one
           currentSection = WidgetSchema(
             id: 'default_section_${rootWidgets.length}',
             type: WidgetType.section,
@@ -30,44 +29,50 @@ class SchemaTranslator {
         }
         currentColumn = widget.copyWith(children: []);
         
-        // Add column to section
-        final updatedSection = currentSection.copyWith(
-          children: [...?currentSection.children, currentColumn],
-        );
-        
-        // Update reference in rootWidgets
-        final index = rootWidgets.indexOf(currentSection);
-        rootWidgets[index] = updatedSection;
-        currentSection = updatedSection;
+        final sectionIndex = rootWidgets.indexOf(currentSection);
+        if (sectionIndex != -1) {
+          final updatedSection = currentSection.copyWith(
+            children: [...?currentSection.children, currentColumn],
+          );
+          rootWidgets[sectionIndex] = updatedSection;
+          currentSection = updatedSection;
+        }
       } else {
-        // Regular field
-        if (currentColumn != null) {
-          // Add to current column
+        if (currentColumn != null && currentSection != null) {
           final updatedColumn = currentColumn.copyWith(
             children: [...?currentColumn.children, widget],
           );
           
-          // Update column reference in section
-          final sectionIndex = rootWidgets.indexOf(currentSection!);
-          final columnIndex = currentSection.children!.indexOf(currentColumn);
-          final updatedChildren = List<WidgetSchema>.from(currentSection.children!);
-          updatedChildren[columnIndex] = updatedColumn;
-          
-          final updatedSection = currentSection.copyWith(children: updatedChildren);
-          rootWidgets[sectionIndex] = updatedSection;
-          
-          currentSection = updatedSection;
-          currentColumn = updatedColumn;
+          final sectionIndex = rootWidgets.indexOf(currentSection);
+          if (sectionIndex != -1) {
+            final updatedChildren = List<WidgetSchema>.from(currentSection.children ?? []);
+            final columnIndex = updatedChildren.indexWhere((c) => c.id == currentColumn!.id);
+            
+            if (columnIndex != -1) {
+              updatedChildren[columnIndex] = updatedColumn;
+              final updatedSection = currentSection.copyWith(children: updatedChildren);
+              rootWidgets[sectionIndex] = updatedSection;
+              currentSection = updatedSection;
+              currentColumn = updatedColumn;
+            } else {
+              // Column not found in section for some reason, add to section directly
+              final updatedSection = currentSection.copyWith(
+                children: [...?currentSection.children, widget],
+              );
+              rootWidgets[sectionIndex] = updatedSection;
+              currentSection = updatedSection;
+            }
+          }
         } else if (currentSection != null) {
-          // Add directly to section (if no columns exist yet)
           final updatedSection = currentSection.copyWith(
             children: [...?currentSection.children, widget],
           );
           final index = rootWidgets.indexOf(currentSection);
-          rootWidgets[index] = updatedSection;
-          currentSection = updatedSection;
+          if (index != -1) {
+            rootWidgets[index] = updatedSection;
+            currentSection = updatedSection;
+          }
         } else {
-          // No section or column, add to root (maybe wrap in a default section)
           currentSection = WidgetSchema(
             id: 'default_section_top',
             type: WidgetType.section,
@@ -86,7 +91,7 @@ class SchemaTranslator {
   static WidgetSchema translateField(DocField field) {
     return WidgetSchema(
       id: field.fieldname,
-      label: field.label,
+      label: field.label ?? field.fieldname, // Fallback to fieldname
       type: _mapFieldType(field.fieldtype),
       isRequired: field.reqd == 1,
       isReadOnly: field.readOnly == 1,

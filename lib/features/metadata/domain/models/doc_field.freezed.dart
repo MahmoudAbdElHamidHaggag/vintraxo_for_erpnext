@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DocField {
 
- String get fieldname; String get fieldtype; String get label; int? get reqd; int? get hidden; int? get readOnly; String? get options; String? get defaultValue; String? get description; int? get inListView; int? get inStandardFilter; int? get bold; int? get allowOnSubmit; String? get dependsOn; String? get mandatoryDependsOn; String? get readOnlyDependsOn;
+ String get fieldname; String get fieldtype; String? get label; int? get reqd; int? get hidden; int? get readOnly; String? get options; String? get defaultValue; String? get description; int? get inListView; int? get inStandardFilter; int? get bold; int? get allowOnSubmit; String? get dependsOn; String? get mandatoryDependsOn; String? get readOnlyDependsOn;
 /// Create a copy of DocField
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $DocFieldCopyWith<$Res>  {
   factory $DocFieldCopyWith(DocField value, $Res Function(DocField) _then) = _$DocFieldCopyWithImpl;
 @useResult
 $Res call({
- String fieldname, String fieldtype, String label, int? reqd, int? hidden, int? readOnly, String? options, String? defaultValue, String? description, int? inListView, int? inStandardFilter, int? bold, int? allowOnSubmit, String? dependsOn, String? mandatoryDependsOn, String? readOnlyDependsOn
+ String fieldname, String fieldtype, String? label, int? reqd, int? hidden, int? readOnly, String? options, String? defaultValue, String? description, int? inListView, int? inStandardFilter, int? bold, int? allowOnSubmit, String? dependsOn, String? mandatoryDependsOn, String? readOnlyDependsOn
 });
 
 
@@ -65,12 +65,12 @@ class _$DocFieldCopyWithImpl<$Res>
 
 /// Create a copy of DocField
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? fieldname = null,Object? fieldtype = null,Object? label = null,Object? reqd = freezed,Object? hidden = freezed,Object? readOnly = freezed,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? inListView = freezed,Object? inStandardFilter = freezed,Object? bold = freezed,Object? allowOnSubmit = freezed,Object? dependsOn = freezed,Object? mandatoryDependsOn = freezed,Object? readOnlyDependsOn = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? fieldname = null,Object? fieldtype = null,Object? label = freezed,Object? reqd = freezed,Object? hidden = freezed,Object? readOnly = freezed,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? inListView = freezed,Object? inStandardFilter = freezed,Object? bold = freezed,Object? allowOnSubmit = freezed,Object? dependsOn = freezed,Object? mandatoryDependsOn = freezed,Object? readOnlyDependsOn = freezed,}) {
   return _then(_self.copyWith(
 fieldname: null == fieldname ? _self.fieldname : fieldname // ignore: cast_nullable_to_non_nullable
 as String,fieldtype: null == fieldtype ? _self.fieldtype : fieldtype // ignore: cast_nullable_to_non_nullable
-as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
-as String,reqd: freezed == reqd ? _self.reqd : reqd // ignore: cast_nullable_to_non_nullable
+as String,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
+as String?,reqd: freezed == reqd ? _self.reqd : reqd // ignore: cast_nullable_to_non_nullable
 as int?,hidden: freezed == hidden ? _self.hidden : hidden // ignore: cast_nullable_to_non_nullable
 as int?,readOnly: freezed == readOnly ? _self.readOnly : readOnly // ignore: cast_nullable_to_non_nullable
 as int?,options: freezed == options ? _self.options : options // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String fieldname,  String fieldtype,  String label,  int? reqd,  int? hidden,  int? readOnly,  String? options,  String? defaultValue,  String? description,  int? inListView,  int? inStandardFilter,  int? bold,  int? allowOnSubmit,  String? dependsOn,  String? mandatoryDependsOn,  String? readOnlyDependsOn)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String fieldname,  String fieldtype,  String? label,  int? reqd,  int? hidden,  int? readOnly,  String? options,  String? defaultValue,  String? description,  int? inListView,  int? inStandardFilter,  int? bold,  int? allowOnSubmit,  String? dependsOn,  String? mandatoryDependsOn,  String? readOnlyDependsOn)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DocField() when $default != null:
 return $default(_that.fieldname,_that.fieldtype,_that.label,_that.reqd,_that.hidden,_that.readOnly,_that.options,_that.defaultValue,_that.description,_that.inListView,_that.inStandardFilter,_that.bold,_that.allowOnSubmit,_that.dependsOn,_that.mandatoryDependsOn,_that.readOnlyDependsOn);case _:
@@ -189,7 +189,7 @@ return $default(_that.fieldname,_that.fieldtype,_that.label,_that.reqd,_that.hid
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String fieldname,  String fieldtype,  String label,  int? reqd,  int? hidden,  int? readOnly,  String? options,  String? defaultValue,  String? description,  int? inListView,  int? inStandardFilter,  int? bold,  int? allowOnSubmit,  String? dependsOn,  String? mandatoryDependsOn,  String? readOnlyDependsOn)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String fieldname,  String fieldtype,  String? label,  int? reqd,  int? hidden,  int? readOnly,  String? options,  String? defaultValue,  String? description,  int? inListView,  int? inStandardFilter,  int? bold,  int? allowOnSubmit,  String? dependsOn,  String? mandatoryDependsOn,  String? readOnlyDependsOn)  $default,) {final _that = this;
 switch (_that) {
 case _DocField():
 return $default(_that.fieldname,_that.fieldtype,_that.label,_that.reqd,_that.hidden,_that.readOnly,_that.options,_that.defaultValue,_that.description,_that.inListView,_that.inStandardFilter,_that.bold,_that.allowOnSubmit,_that.dependsOn,_that.mandatoryDependsOn,_that.readOnlyDependsOn);case _:
@@ -209,7 +209,7 @@ return $default(_that.fieldname,_that.fieldtype,_that.label,_that.reqd,_that.hid
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String fieldname,  String fieldtype,  String label,  int? reqd,  int? hidden,  int? readOnly,  String? options,  String? defaultValue,  String? description,  int? inListView,  int? inStandardFilter,  int? bold,  int? allowOnSubmit,  String? dependsOn,  String? mandatoryDependsOn,  String? readOnlyDependsOn)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String fieldname,  String fieldtype,  String? label,  int? reqd,  int? hidden,  int? readOnly,  String? options,  String? defaultValue,  String? description,  int? inListView,  int? inStandardFilter,  int? bold,  int? allowOnSubmit,  String? dependsOn,  String? mandatoryDependsOn,  String? readOnlyDependsOn)?  $default,) {final _that = this;
 switch (_that) {
 case _DocField() when $default != null:
 return $default(_that.fieldname,_that.fieldtype,_that.label,_that.reqd,_that.hidden,_that.readOnly,_that.options,_that.defaultValue,_that.description,_that.inListView,_that.inStandardFilter,_that.bold,_that.allowOnSubmit,_that.dependsOn,_that.mandatoryDependsOn,_that.readOnlyDependsOn);case _:
@@ -224,12 +224,12 @@ return $default(_that.fieldname,_that.fieldtype,_that.label,_that.reqd,_that.hid
 @JsonSerializable()
 
 class _DocField implements DocField {
-  const _DocField({required this.fieldname, required this.fieldtype, required this.label, this.reqd, this.hidden, this.readOnly, this.options, this.defaultValue, this.description, this.inListView, this.inStandardFilter, this.bold, this.allowOnSubmit, this.dependsOn, this.mandatoryDependsOn, this.readOnlyDependsOn});
+  const _DocField({required this.fieldname, required this.fieldtype, this.label, this.reqd, this.hidden, this.readOnly, this.options, this.defaultValue, this.description, this.inListView, this.inStandardFilter, this.bold, this.allowOnSubmit, this.dependsOn, this.mandatoryDependsOn, this.readOnlyDependsOn});
   factory _DocField.fromJson(Map<String, dynamic> json) => _$DocFieldFromJson(json);
 
 @override final  String fieldname;
 @override final  String fieldtype;
-@override final  String label;
+@override final  String? label;
 @override final  int? reqd;
 @override final  int? hidden;
 @override final  int? readOnly;
@@ -277,7 +277,7 @@ abstract mixin class _$DocFieldCopyWith<$Res> implements $DocFieldCopyWith<$Res>
   factory _$DocFieldCopyWith(_DocField value, $Res Function(_DocField) _then) = __$DocFieldCopyWithImpl;
 @override @useResult
 $Res call({
- String fieldname, String fieldtype, String label, int? reqd, int? hidden, int? readOnly, String? options, String? defaultValue, String? description, int? inListView, int? inStandardFilter, int? bold, int? allowOnSubmit, String? dependsOn, String? mandatoryDependsOn, String? readOnlyDependsOn
+ String fieldname, String fieldtype, String? label, int? reqd, int? hidden, int? readOnly, String? options, String? defaultValue, String? description, int? inListView, int? inStandardFilter, int? bold, int? allowOnSubmit, String? dependsOn, String? mandatoryDependsOn, String? readOnlyDependsOn
 });
 
 
@@ -294,12 +294,12 @@ class __$DocFieldCopyWithImpl<$Res>
 
 /// Create a copy of DocField
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fieldname = null,Object? fieldtype = null,Object? label = null,Object? reqd = freezed,Object? hidden = freezed,Object? readOnly = freezed,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? inListView = freezed,Object? inStandardFilter = freezed,Object? bold = freezed,Object? allowOnSubmit = freezed,Object? dependsOn = freezed,Object? mandatoryDependsOn = freezed,Object? readOnlyDependsOn = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fieldname = null,Object? fieldtype = null,Object? label = freezed,Object? reqd = freezed,Object? hidden = freezed,Object? readOnly = freezed,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? inListView = freezed,Object? inStandardFilter = freezed,Object? bold = freezed,Object? allowOnSubmit = freezed,Object? dependsOn = freezed,Object? mandatoryDependsOn = freezed,Object? readOnlyDependsOn = freezed,}) {
   return _then(_DocField(
 fieldname: null == fieldname ? _self.fieldname : fieldname // ignore: cast_nullable_to_non_nullable
 as String,fieldtype: null == fieldtype ? _self.fieldtype : fieldtype // ignore: cast_nullable_to_non_nullable
-as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
-as String,reqd: freezed == reqd ? _self.reqd : reqd // ignore: cast_nullable_to_non_nullable
+as String,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
+as String?,reqd: freezed == reqd ? _self.reqd : reqd // ignore: cast_nullable_to_non_nullable
 as int?,hidden: freezed == hidden ? _self.hidden : hidden // ignore: cast_nullable_to_non_nullable
 as int?,readOnly: freezed == readOnly ? _self.readOnly : readOnly // ignore: cast_nullable_to_non_nullable
 as int?,options: freezed == options ? _self.options : options // ignore: cast_nullable_to_non_nullable

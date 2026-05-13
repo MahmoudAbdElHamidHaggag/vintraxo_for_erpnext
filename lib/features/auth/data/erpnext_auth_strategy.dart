@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:vintraxo_for_erpnext/core/auth/auth_strategy.dart';
 
 class ERPNextAuthStrategy implements AuthStrategy {
@@ -30,7 +31,12 @@ class ERPNextAuthStrategy implements AuthStrategy {
         return true;
       }
       return false;
+    } on DioException catch (e) {
+      debugPrint('Login Error: ${e.message}');
+      debugPrint('Response: ${e.response?.data}');
+      return false;
     } catch (e) {
+      debugPrint('Unexpected Login Error: $e');
       return false;
     }
   }
