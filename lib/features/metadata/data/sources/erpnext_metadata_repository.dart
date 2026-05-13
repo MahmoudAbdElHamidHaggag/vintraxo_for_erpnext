@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:vintraxo_for_erpnext/features/metadata/data/repositories/metadata_repository.dart';
 import 'package:vintraxo_for_erpnext/features/metadata/domain/models/doc_type.dart';
@@ -67,6 +68,39 @@ class ERPNextMetadataRepository implements MetadataRepository {
       return [];
     } catch (e) {
       throw Exception('Failed to search link for $docTypeName: $e');
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getDocuments({
+    required String docTypeName,
+    List<String>? fields,
+    Map<String, dynamic>? filters,
+    String? orderBy,
+    int? limitStart,
+    int? limitLength,
+  }) async {
+    try {
+      final queryParameters = <String, dynamic>{
+        if (fields != null) 'fields': jsonEncode(fields),
+        if (filters != null) 'filters': jsonEncode(filters),
+        if (orderBy != null) 'order_by': orderBy,
+        if (limitStart != null) 'limit_start': limitStart,
+        if (limitLength != null) 'limit_page_length': limitLength,
+      };
+
+      final response = await dio.get(
+        '/api/resource/$docTypeName',
+        queryParameters: queryParameters,
+      );
+
+      if (response.statusCode == 200 && response.data['data'] != null) {
+        final List<dynamic> data = response.data['data'];
+        return data.map((r) => Map<String, dynamic>.from(r)).toList();
+      }
+      return [];
+    } catch (e) {
+      throw Exception('Failed to fetch documents for $docTypeName: $e');
     }
   }
 }

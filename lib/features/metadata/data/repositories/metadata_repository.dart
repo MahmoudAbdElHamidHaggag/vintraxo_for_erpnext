@@ -13,4 +13,14 @@ abstract class MetadataRepository {
     required String docTypeName,
     required String query,
   });
+
+  /// Fetches a list of documents (records) for a specific DocType.
+  Future<List<Map<String, dynamic>>> getDocuments({
+    required String docTypeName,
+    List<String>? fields,
+    Map<String, dynamic>? filters,
+    String? orderBy,
+    int? limitStart,
+    int? limitLength,
+  });
 }
