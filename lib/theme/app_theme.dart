@@ -67,7 +67,7 @@ class AppTheme {
         ),
         labelStyle: const TextStyle(color: textSecondary),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: surfaceColor,
         elevation: 1,
         shape: RoundedRectangleBorder(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vintraxo_for_erpnext/features/auth/presentation/screens/domain_entry_screen.dart';
 import 'package:vintraxo_for_erpnext/features/auth/presentation/screens/login_screen.dart';
+import 'package:vintraxo_for_erpnext/features/auth/presentation/screens/splash_screen.dart';
 import 'package:vintraxo_for_erpnext/features/metadata/presentation/screens/doc_type_view_screen.dart';
 import 'package:vintraxo_for_erpnext/features/metadata/presentation/screens/doc_type_list_screen.dart';
 import 'package:vintraxo_for_erpnext/features/metadata/presentation/screens/workspace_screen.dart';
@@ -12,8 +13,14 @@ final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>()
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/',
+  initialLocation: '/splash',
   routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (BuildContext context, GoRouterState state) {
+        return const SplashScreen();
+      },
+    ),
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
