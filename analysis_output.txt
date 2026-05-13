@@ -1,0 +1,25 @@
+Analyzing vintraxo_for_erpnext...                               
+
+   info • Parameter 'e' could be a super parameter • lib/core/storage/database/app_database.dart:13:15 • use_super_parameters
+  error • The method 'Variable' isn't defined for the type 'DriftStorageAdapter' • lib/core/storage/database/drift_storage_adapter.dart:17:80 • undefined_method
+warning • The value of the local variable 'payload' isn't used • lib/core/storage/sync/sync_service.dart:58:13 • unused_local_variable
+warning • The value of the local variable 'domain' isn't used • lib/features/auth/presentation/screens/login_screen.dart:30:13 • unused_local_variable
+   info • Use the null-aware marker '?' rather than a null check via an 'if' • lib/features/metadata/data/sources/erpnext_metadata_repository.dart:87:9 • use_null_aware_elements
+   info • Use the null-aware marker '?' rather than a null check via an 'if' • lib/features/metadata/data/sources/erpnext_metadata_repository.dart:88:9 • use_null_aware_elements
+   info • Use the null-aware marker '?' rather than a null check via an 'if' • lib/features/metadata/data/sources/erpnext_metadata_repository.dart:89:9 • use_null_aware_elements
+warning • Unused import: 'package:drift/drift.dart' • lib/features/metadata/data/sources/schema_versioning_service.dart:3:8 • unused_import
+  error • Missing concrete implementations of '_$DashboardChart.toJson', 'getter _$DashboardChart.color', 'getter _$DashboardChart.data', 'getter _$DashboardChart.label', and 2 more • lib/features/metadata/domain/models/report_models.dart:14:7 • non_abstract_class_inherits_abstract_member
+  error • Missing concrete implementations of '_$ChartDataPoint.toJson', 'getter _$ChartDataPoint.x', and 'getter _$ChartDataPoint.y' • lib/features/metadata/domain/models/report_models.dart:27:7 • non_abstract_class_inherits_abstract_member
+  error • Missing concrete implementations of '_$NumberCard.toJson', 'getter _$NumberCard.indicator', 'getter _$NumberCard.indicatorValue', 'getter _$NumberCard.label', and 2 more • lib/features/metadata/domain/models/report_models.dart:37:7 • non_abstract_class_inherits_abstract_member
+warning • The value of 'refresh' should be used • lib/features/metadata/presentation/screens/doc_type_list_screen.dart:31:19 • unused_result
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/metadata/presentation/screens/workspace_screen.dart:154:49 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/metadata/presentation/screens/workspace_screen.dart:156:68 • deprecated_member_use
+warning • The operand can't be 'null', so the condition is always 'true' • lib/features/metadata/presentation/widgets/doc_list_item.dart:24:56 • unnecessary_null_comparison
+  error • Missing concrete implementations of '_$WidgetSchema.toJson', 'getter _$WidgetSchema.children', 'getter _$WidgetSchema.defaultValue', 'getter _$WidgetSchema.dependsOn', and 8 more • lib/features/ui_schema/domain/models/widget_schema.dart:28:7 • non_abstract_class_inherits_abstract_member
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/ui_schema/presentation/widgets/dashboard/chart_factory.dart:38:50 • deprecated_member_use
+warning • The value of the local variable 'controller' isn't used • lib/features/ui_schema/presentation/widgets/fields/link_field.dart:21:11 • unused_local_variable
+   info • Unnecessary use of multiple underscores • lib/features/ui_schema/presentation/widgets/vintraxo_sidebar.dart:115:24 • unnecessary_underscores
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/ui_schema/presentation/widgets/widget_factory.dart:101:9 • deprecated_member_use
+warning • Duplicate import • test/widget_test.dart:12:8 • duplicate_import
+
+21 issues found. (ran in 2.2s)

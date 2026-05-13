@@ -11,7 +11,7 @@ enum ChartType {
 }
 
 @freezed
-class DashboardChart with _$DashboardChart {
+abstract class DashboardChart with _$DashboardChart {
   const factory DashboardChart({
     required String name,
     required String label,
@@ -24,7 +24,7 @@ class DashboardChart with _$DashboardChart {
 }
 
 @freezed
-class ChartDataPoint with _$ChartDataPoint {
+abstract class ChartDataPoint with _$ChartDataPoint {
   const factory ChartDataPoint({
     required String x,
     required double y,
@@ -34,7 +34,7 @@ class ChartDataPoint with _$ChartDataPoint {
 }
 
 @freezed
-class NumberCard with _$NumberCard {
+abstract class NumberCard with _$NumberCard {
   const factory NumberCard({
     required String name,
     required String label,

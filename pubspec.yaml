@@ -48,6 +48,7 @@ dependencies:
   fl_chart: ^1.2.0
   intl: ^0.20.2
   connectivity_plus: ^7.1.1
+  drift_flutter: ^0.3.0
 
 dev_dependencies:
   flutter_test:

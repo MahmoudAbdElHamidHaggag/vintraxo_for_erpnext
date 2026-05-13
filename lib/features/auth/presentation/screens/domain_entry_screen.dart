@@ -22,7 +22,10 @@ class _DomainEntryScreenState extends ConsumerState<DomainEntryScreen> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
-      final domain = _domainController.text.trim();
+      var domain = _domainController.text.trim();
+      if (!domain.startsWith('http')) {
+        domain = 'https://$domain';
+      }
       ref.read(domainProvider.notifier).setDomain(domain);
       context.go('/login');
     }

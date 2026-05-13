@@ -47,7 +47,7 @@ class WorkspaceScreen extends StatelessWidget {
               NumberCardWidget(card: const NumberCard(
                 name: 'revenue',
                 label: 'Total Revenue',
-                value: '$ 452,000',
+                value: '\$ 452,000',
                 indicator: 'positive',
                 indicatorValue: '+ 12%',
               )),

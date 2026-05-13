@@ -22,14 +22,15 @@ class ERPNextAuthStrategy implements AuthStrategy {
         // Extract session cookie from headers
         final cookies = response.headers.map['set-cookie'];
         if (cookies != null && cookies.isNotEmpty) {
-          _sessionCookie = cookies.firstWhere((cookie) => cookie.startsWith('sid='));
-          // In a real app, save _sessionCookie via OfflineStorageAdapter here
+          _sessionCookie = cookies.firstWhere((cookie) => cookie.startsWith('sid='), orElse: () => cookies.first);
+        } else {
+          // If on Web, cookies might be handled automatically by browser, set a placeholder
+          _sessionCookie = 'session_active';
         }
         return true;
       }
       return false;
     } catch (e) {
-      // Handle Dio exceptions, invalid credentials, etc.
       return false;
     }
   }

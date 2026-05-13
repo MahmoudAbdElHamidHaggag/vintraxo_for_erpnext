@@ -40,6 +40,10 @@ final GoRouter appRouter = GoRouter(
       },
       routes: [
         GoRoute(
+          path: '/workspace',
+          redirect: (context, state) => '/workspace/Accounting',
+        ),
+        GoRoute(
           path: '/workspace/:module',
           builder: (context, state) {
             final module = state.pathParameters['module'] ?? 'Accounting';

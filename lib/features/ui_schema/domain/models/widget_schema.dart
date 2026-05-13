@@ -25,7 +25,7 @@ enum WidgetType {
 }
 
 @freezed
-class WidgetSchema with _$WidgetSchema {
+abstract class WidgetSchema with _$WidgetSchema {
   const factory WidgetSchema({
     required String id,
     required WidgetType type,

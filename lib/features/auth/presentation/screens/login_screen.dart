@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vintraxo_for_erpnext/features/auth/presentation/providers/auth_providers.dart';
 import 'package:vintraxo_for_erpnext/features/auth/presentation/providers/domain_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -27,18 +28,32 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       
-      final domain = ref.read(domainProvider);
-      // Simulate API call to ERPNext
-      await Future.delayed(const Duration(seconds: 2));
+      final authStrategy = ref.read(authStrategyProvider);
       
-      setState(() => _isLoading = false);
+      final success = await authStrategy.authenticate({
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+      });
       
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Login successful! Welcome to Workspace.')),
-        );
-        // In the future, this will navigate to the Workspace/Dashboard
-        // context.go('/workspace');
+        setState(() => _isLoading = false);
+        
+        if (success) {
+          final token = await authStrategy.getToken();
+          ref.read(sessionProvider.notifier).update(token);
+          ref.read(authStateProvider.notifier).update(true);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login successful! Welcome to Workspace.')),
+          );
+          context.go('/workspace');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login failed. Please check your credentials.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     }
   }

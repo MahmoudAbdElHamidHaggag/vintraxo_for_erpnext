@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:vintraxo_for_erpnext/core/storage/offline_storage_adapter.dart';
 import 'package:vintraxo_for_erpnext/core/storage/database/app_database.dart';
 
