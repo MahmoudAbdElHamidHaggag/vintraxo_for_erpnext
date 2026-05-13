@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vintraxo_for_erpnext/core/storage/database/database_provider.dart';
+import 'package:vintraxo_for_erpnext/core/storage/sync/sync_service.dart';
 import 'package:vintraxo_for_erpnext/features/metadata/presentation/providers/metadata_providers.dart';
+import 'package:drift/drift.dart' hide Column;
 
 class VintraxoSidebar extends ConsumerWidget {
   final String? selectedModule;
@@ -49,7 +52,7 @@ class VintraxoSidebar extends ConsumerWidget {
               error: (err, stack) => Center(child: Text('Error: $err')),
             ),
           ),
-          _buildFooter(context),
+          _buildFooter(context, ref),
         ],
       ),
     );
@@ -81,17 +84,45 @@ class VintraxoSidebar extends ConsumerWidget {
     );
   }
 
-  Widget _buildFooter(BuildContext context) {
+  Widget _buildFooter(BuildContext context, WidgetRef ref) {
+    final db = ref.watch(databaseProvider);
+    final syncQueueCountAsync = ref.watch(StreamProvider((ref) => 
+      (db.selectOnly(db.syncQueue)..addColumns([db.syncQueue.id.count()])).watchSingle().map((row) => row.read(db.syncQueue.id.count()) ?? 0)
+    ));
+
     return Container(
       padding: const EdgeInsets.all(16),
-      border: Border(top: BorderSide(color: Colors.grey[300]!)),
-      child: ListTile(
-        leading: const CircleAvatar(child: Icon(Icons.person)),
-        title: const Text('Administrator'),
-        subtitle: const Text('Settings'),
-        onTap: () {
-          // Go to settings
-        },
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: Colors.grey[300]!)),
+      ),
+      child: Column(
+        children: [
+          syncQueueCountAsync.when(
+            data: (count) => count > 0 
+                ? ListTile(
+                    leading: const Icon(Icons.sync, color: Colors.orange),
+                    title: Text('$count pending changes'),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.refresh),
+                      onPressed: () => ref.read(syncServiceProvider).processQueue(),
+                    ),
+                  )
+                : const ListTile(
+                    leading: Icon(Icons.check_circle, color: Colors.green),
+                    title: Text('All synced'),
+                  ),
+            loading: () => const LinearProgressIndicator(),
+            error: (_, __) => const SizedBox.shrink(),
+          ),
+          ListTile(
+            leading: const CircleAvatar(child: Icon(Icons.person)),
+            title: const Text('Administrator'),
+            subtitle: const Text('Settings'),
+            onTap: () {
+              // Go to settings
+            },
+          ),
+        ],
       ),
     );
   }

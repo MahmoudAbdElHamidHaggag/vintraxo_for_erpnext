@@ -7,13 +7,13 @@ import 'tables.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [DocTypes, DocFields, SchemaVersions])
+@DriftDatabase(tables: [DocTypes, DocFields, SchemaVersions, SyncQueue, LocalDocuments])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
   AppDatabase.test(QueryExecutor e) : super(e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 }
 
 LazyDatabase _openConnection() {

@@ -39,3 +39,26 @@ class SchemaVersions extends Table {
   @override
   Set<Column> get primaryKey => {docTypeName};
 }
+
+@DataClassName('SyncQueueEntity')
+class SyncQueue extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get docType => text()();
+  TextColumn get docName => text().nullable()();
+  TextColumn get action => text()(); // 'create', 'update', 'delete'
+  TextColumn get payload => text()(); // JSON string
+  DateTimeColumn get timestamp => dateTime()();
+  IntColumn get retryCount => integer().withDefault(const Constant(0))();
+}
+
+@DataClassName('LocalDocumentEntity')
+class LocalDocuments extends Table {
+  TextColumn get docType => text()();
+  TextColumn get name => text()();
+  TextColumn get payload => text()(); // JSON string
+  DateTimeColumn get lastUpdated => dateTime()();
+  BoolColumn get isPendingSync => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {docType, name};
+}

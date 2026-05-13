@@ -47,6 +47,7 @@ dependencies:
   crypto: ^3.0.7
   fl_chart: ^1.2.0
   intl: ^0.20.2
+  connectivity_plus: ^7.1.1
 
 dev_dependencies:
   flutter_test:

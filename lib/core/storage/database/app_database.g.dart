@@ -1326,12 +1326,838 @@ class SchemaVersionsCompanion extends UpdateCompanion<SchemaVersionEntity> {
   }
 }
 
+class $SyncQueueTable extends SyncQueue
+    with TableInfo<$SyncQueueTable, SyncQueueEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SyncQueueTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _docTypeMeta = const VerificationMeta(
+    'docType',
+  );
+  @override
+  late final GeneratedColumn<String> docType = GeneratedColumn<String>(
+    'doc_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _docNameMeta = const VerificationMeta(
+    'docName',
+  );
+  @override
+  late final GeneratedColumn<String> docName = GeneratedColumn<String>(
+    'doc_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _actionMeta = const VerificationMeta('action');
+  @override
+  late final GeneratedColumn<String> action = GeneratedColumn<String>(
+    'action',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadMeta = const VerificationMeta(
+    'payload',
+  );
+  @override
+  late final GeneratedColumn<String> payload = GeneratedColumn<String>(
+    'payload',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _timestampMeta = const VerificationMeta(
+    'timestamp',
+  );
+  @override
+  late final GeneratedColumn<DateTime> timestamp = GeneratedColumn<DateTime>(
+    'timestamp',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _retryCountMeta = const VerificationMeta(
+    'retryCount',
+  );
+  @override
+  late final GeneratedColumn<int> retryCount = GeneratedColumn<int>(
+    'retry_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    docType,
+    docName,
+    action,
+    payload,
+    timestamp,
+    retryCount,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sync_queue';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SyncQueueEntity> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('doc_type')) {
+      context.handle(
+        _docTypeMeta,
+        docType.isAcceptableOrUnknown(data['doc_type']!, _docTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_docTypeMeta);
+    }
+    if (data.containsKey('doc_name')) {
+      context.handle(
+        _docNameMeta,
+        docName.isAcceptableOrUnknown(data['doc_name']!, _docNameMeta),
+      );
+    }
+    if (data.containsKey('action')) {
+      context.handle(
+        _actionMeta,
+        action.isAcceptableOrUnknown(data['action']!, _actionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_actionMeta);
+    }
+    if (data.containsKey('payload')) {
+      context.handle(
+        _payloadMeta,
+        payload.isAcceptableOrUnknown(data['payload']!, _payloadMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadMeta);
+    }
+    if (data.containsKey('timestamp')) {
+      context.handle(
+        _timestampMeta,
+        timestamp.isAcceptableOrUnknown(data['timestamp']!, _timestampMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_timestampMeta);
+    }
+    if (data.containsKey('retry_count')) {
+      context.handle(
+        _retryCountMeta,
+        retryCount.isAcceptableOrUnknown(data['retry_count']!, _retryCountMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SyncQueueEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SyncQueueEntity(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      docType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}doc_type'],
+      )!,
+      docName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}doc_name'],
+      ),
+      action: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}action'],
+      )!,
+      payload: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload'],
+      )!,
+      timestamp: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}timestamp'],
+      )!,
+      retryCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}retry_count'],
+      )!,
+    );
+  }
+
+  @override
+  $SyncQueueTable createAlias(String alias) {
+    return $SyncQueueTable(attachedDatabase, alias);
+  }
+}
+
+class SyncQueueEntity extends DataClass implements Insertable<SyncQueueEntity> {
+  final int id;
+  final String docType;
+  final String? docName;
+  final String action;
+  final String payload;
+  final DateTime timestamp;
+  final int retryCount;
+  const SyncQueueEntity({
+    required this.id,
+    required this.docType,
+    this.docName,
+    required this.action,
+    required this.payload,
+    required this.timestamp,
+    required this.retryCount,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['doc_type'] = Variable<String>(docType);
+    if (!nullToAbsent || docName != null) {
+      map['doc_name'] = Variable<String>(docName);
+    }
+    map['action'] = Variable<String>(action);
+    map['payload'] = Variable<String>(payload);
+    map['timestamp'] = Variable<DateTime>(timestamp);
+    map['retry_count'] = Variable<int>(retryCount);
+    return map;
+  }
+
+  SyncQueueCompanion toCompanion(bool nullToAbsent) {
+    return SyncQueueCompanion(
+      id: Value(id),
+      docType: Value(docType),
+      docName: docName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(docName),
+      action: Value(action),
+      payload: Value(payload),
+      timestamp: Value(timestamp),
+      retryCount: Value(retryCount),
+    );
+  }
+
+  factory SyncQueueEntity.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SyncQueueEntity(
+      id: serializer.fromJson<int>(json['id']),
+      docType: serializer.fromJson<String>(json['docType']),
+      docName: serializer.fromJson<String?>(json['docName']),
+      action: serializer.fromJson<String>(json['action']),
+      payload: serializer.fromJson<String>(json['payload']),
+      timestamp: serializer.fromJson<DateTime>(json['timestamp']),
+      retryCount: serializer.fromJson<int>(json['retryCount']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'docType': serializer.toJson<String>(docType),
+      'docName': serializer.toJson<String?>(docName),
+      'action': serializer.toJson<String>(action),
+      'payload': serializer.toJson<String>(payload),
+      'timestamp': serializer.toJson<DateTime>(timestamp),
+      'retryCount': serializer.toJson<int>(retryCount),
+    };
+  }
+
+  SyncQueueEntity copyWith({
+    int? id,
+    String? docType,
+    Value<String?> docName = const Value.absent(),
+    String? action,
+    String? payload,
+    DateTime? timestamp,
+    int? retryCount,
+  }) => SyncQueueEntity(
+    id: id ?? this.id,
+    docType: docType ?? this.docType,
+    docName: docName.present ? docName.value : this.docName,
+    action: action ?? this.action,
+    payload: payload ?? this.payload,
+    timestamp: timestamp ?? this.timestamp,
+    retryCount: retryCount ?? this.retryCount,
+  );
+  SyncQueueEntity copyWithCompanion(SyncQueueCompanion data) {
+    return SyncQueueEntity(
+      id: data.id.present ? data.id.value : this.id,
+      docType: data.docType.present ? data.docType.value : this.docType,
+      docName: data.docName.present ? data.docName.value : this.docName,
+      action: data.action.present ? data.action.value : this.action,
+      payload: data.payload.present ? data.payload.value : this.payload,
+      timestamp: data.timestamp.present ? data.timestamp.value : this.timestamp,
+      retryCount: data.retryCount.present
+          ? data.retryCount.value
+          : this.retryCount,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncQueueEntity(')
+          ..write('id: $id, ')
+          ..write('docType: $docType, ')
+          ..write('docName: $docName, ')
+          ..write('action: $action, ')
+          ..write('payload: $payload, ')
+          ..write('timestamp: $timestamp, ')
+          ..write('retryCount: $retryCount')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, docType, docName, action, payload, timestamp, retryCount);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SyncQueueEntity &&
+          other.id == this.id &&
+          other.docType == this.docType &&
+          other.docName == this.docName &&
+          other.action == this.action &&
+          other.payload == this.payload &&
+          other.timestamp == this.timestamp &&
+          other.retryCount == this.retryCount);
+}
+
+class SyncQueueCompanion extends UpdateCompanion<SyncQueueEntity> {
+  final Value<int> id;
+  final Value<String> docType;
+  final Value<String?> docName;
+  final Value<String> action;
+  final Value<String> payload;
+  final Value<DateTime> timestamp;
+  final Value<int> retryCount;
+  const SyncQueueCompanion({
+    this.id = const Value.absent(),
+    this.docType = const Value.absent(),
+    this.docName = const Value.absent(),
+    this.action = const Value.absent(),
+    this.payload = const Value.absent(),
+    this.timestamp = const Value.absent(),
+    this.retryCount = const Value.absent(),
+  });
+  SyncQueueCompanion.insert({
+    this.id = const Value.absent(),
+    required String docType,
+    this.docName = const Value.absent(),
+    required String action,
+    required String payload,
+    required DateTime timestamp,
+    this.retryCount = const Value.absent(),
+  }) : docType = Value(docType),
+       action = Value(action),
+       payload = Value(payload),
+       timestamp = Value(timestamp);
+  static Insertable<SyncQueueEntity> custom({
+    Expression<int>? id,
+    Expression<String>? docType,
+    Expression<String>? docName,
+    Expression<String>? action,
+    Expression<String>? payload,
+    Expression<DateTime>? timestamp,
+    Expression<int>? retryCount,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (docType != null) 'doc_type': docType,
+      if (docName != null) 'doc_name': docName,
+      if (action != null) 'action': action,
+      if (payload != null) 'payload': payload,
+      if (timestamp != null) 'timestamp': timestamp,
+      if (retryCount != null) 'retry_count': retryCount,
+    });
+  }
+
+  SyncQueueCompanion copyWith({
+    Value<int>? id,
+    Value<String>? docType,
+    Value<String?>? docName,
+    Value<String>? action,
+    Value<String>? payload,
+    Value<DateTime>? timestamp,
+    Value<int>? retryCount,
+  }) {
+    return SyncQueueCompanion(
+      id: id ?? this.id,
+      docType: docType ?? this.docType,
+      docName: docName ?? this.docName,
+      action: action ?? this.action,
+      payload: payload ?? this.payload,
+      timestamp: timestamp ?? this.timestamp,
+      retryCount: retryCount ?? this.retryCount,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (docType.present) {
+      map['doc_type'] = Variable<String>(docType.value);
+    }
+    if (docName.present) {
+      map['doc_name'] = Variable<String>(docName.value);
+    }
+    if (action.present) {
+      map['action'] = Variable<String>(action.value);
+    }
+    if (payload.present) {
+      map['payload'] = Variable<String>(payload.value);
+    }
+    if (timestamp.present) {
+      map['timestamp'] = Variable<DateTime>(timestamp.value);
+    }
+    if (retryCount.present) {
+      map['retry_count'] = Variable<int>(retryCount.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncQueueCompanion(')
+          ..write('id: $id, ')
+          ..write('docType: $docType, ')
+          ..write('docName: $docName, ')
+          ..write('action: $action, ')
+          ..write('payload: $payload, ')
+          ..write('timestamp: $timestamp, ')
+          ..write('retryCount: $retryCount')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocalDocumentsTable extends LocalDocuments
+    with TableInfo<$LocalDocumentsTable, LocalDocumentEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalDocumentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _docTypeMeta = const VerificationMeta(
+    'docType',
+  );
+  @override
+  late final GeneratedColumn<String> docType = GeneratedColumn<String>(
+    'doc_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadMeta = const VerificationMeta(
+    'payload',
+  );
+  @override
+  late final GeneratedColumn<String> payload = GeneratedColumn<String>(
+    'payload',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastUpdatedMeta = const VerificationMeta(
+    'lastUpdated',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastUpdated = GeneratedColumn<DateTime>(
+    'last_updated',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isPendingSyncMeta = const VerificationMeta(
+    'isPendingSync',
+  );
+  @override
+  late final GeneratedColumn<bool> isPendingSync = GeneratedColumn<bool>(
+    'is_pending_sync',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_pending_sync" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    docType,
+    name,
+    payload,
+    lastUpdated,
+    isPendingSync,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_documents';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalDocumentEntity> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('doc_type')) {
+      context.handle(
+        _docTypeMeta,
+        docType.isAcceptableOrUnknown(data['doc_type']!, _docTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_docTypeMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('payload')) {
+      context.handle(
+        _payloadMeta,
+        payload.isAcceptableOrUnknown(data['payload']!, _payloadMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadMeta);
+    }
+    if (data.containsKey('last_updated')) {
+      context.handle(
+        _lastUpdatedMeta,
+        lastUpdated.isAcceptableOrUnknown(
+          data['last_updated']!,
+          _lastUpdatedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_lastUpdatedMeta);
+    }
+    if (data.containsKey('is_pending_sync')) {
+      context.handle(
+        _isPendingSyncMeta,
+        isPendingSync.isAcceptableOrUnknown(
+          data['is_pending_sync']!,
+          _isPendingSyncMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {docType, name};
+  @override
+  LocalDocumentEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalDocumentEntity(
+      docType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}doc_type'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      payload: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload'],
+      )!,
+      lastUpdated: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_updated'],
+      )!,
+      isPendingSync: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_pending_sync'],
+      )!,
+    );
+  }
+
+  @override
+  $LocalDocumentsTable createAlias(String alias) {
+    return $LocalDocumentsTable(attachedDatabase, alias);
+  }
+}
+
+class LocalDocumentEntity extends DataClass
+    implements Insertable<LocalDocumentEntity> {
+  final String docType;
+  final String name;
+  final String payload;
+  final DateTime lastUpdated;
+  final bool isPendingSync;
+  const LocalDocumentEntity({
+    required this.docType,
+    required this.name,
+    required this.payload,
+    required this.lastUpdated,
+    required this.isPendingSync,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['doc_type'] = Variable<String>(docType);
+    map['name'] = Variable<String>(name);
+    map['payload'] = Variable<String>(payload);
+    map['last_updated'] = Variable<DateTime>(lastUpdated);
+    map['is_pending_sync'] = Variable<bool>(isPendingSync);
+    return map;
+  }
+
+  LocalDocumentsCompanion toCompanion(bool nullToAbsent) {
+    return LocalDocumentsCompanion(
+      docType: Value(docType),
+      name: Value(name),
+      payload: Value(payload),
+      lastUpdated: Value(lastUpdated),
+      isPendingSync: Value(isPendingSync),
+    );
+  }
+
+  factory LocalDocumentEntity.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalDocumentEntity(
+      docType: serializer.fromJson<String>(json['docType']),
+      name: serializer.fromJson<String>(json['name']),
+      payload: serializer.fromJson<String>(json['payload']),
+      lastUpdated: serializer.fromJson<DateTime>(json['lastUpdated']),
+      isPendingSync: serializer.fromJson<bool>(json['isPendingSync']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'docType': serializer.toJson<String>(docType),
+      'name': serializer.toJson<String>(name),
+      'payload': serializer.toJson<String>(payload),
+      'lastUpdated': serializer.toJson<DateTime>(lastUpdated),
+      'isPendingSync': serializer.toJson<bool>(isPendingSync),
+    };
+  }
+
+  LocalDocumentEntity copyWith({
+    String? docType,
+    String? name,
+    String? payload,
+    DateTime? lastUpdated,
+    bool? isPendingSync,
+  }) => LocalDocumentEntity(
+    docType: docType ?? this.docType,
+    name: name ?? this.name,
+    payload: payload ?? this.payload,
+    lastUpdated: lastUpdated ?? this.lastUpdated,
+    isPendingSync: isPendingSync ?? this.isPendingSync,
+  );
+  LocalDocumentEntity copyWithCompanion(LocalDocumentsCompanion data) {
+    return LocalDocumentEntity(
+      docType: data.docType.present ? data.docType.value : this.docType,
+      name: data.name.present ? data.name.value : this.name,
+      payload: data.payload.present ? data.payload.value : this.payload,
+      lastUpdated: data.lastUpdated.present
+          ? data.lastUpdated.value
+          : this.lastUpdated,
+      isPendingSync: data.isPendingSync.present
+          ? data.isPendingSync.value
+          : this.isPendingSync,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalDocumentEntity(')
+          ..write('docType: $docType, ')
+          ..write('name: $name, ')
+          ..write('payload: $payload, ')
+          ..write('lastUpdated: $lastUpdated, ')
+          ..write('isPendingSync: $isPendingSync')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(docType, name, payload, lastUpdated, isPendingSync);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalDocumentEntity &&
+          other.docType == this.docType &&
+          other.name == this.name &&
+          other.payload == this.payload &&
+          other.lastUpdated == this.lastUpdated &&
+          other.isPendingSync == this.isPendingSync);
+}
+
+class LocalDocumentsCompanion extends UpdateCompanion<LocalDocumentEntity> {
+  final Value<String> docType;
+  final Value<String> name;
+  final Value<String> payload;
+  final Value<DateTime> lastUpdated;
+  final Value<bool> isPendingSync;
+  final Value<int> rowid;
+  const LocalDocumentsCompanion({
+    this.docType = const Value.absent(),
+    this.name = const Value.absent(),
+    this.payload = const Value.absent(),
+    this.lastUpdated = const Value.absent(),
+    this.isPendingSync = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalDocumentsCompanion.insert({
+    required String docType,
+    required String name,
+    required String payload,
+    required DateTime lastUpdated,
+    this.isPendingSync = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : docType = Value(docType),
+       name = Value(name),
+       payload = Value(payload),
+       lastUpdated = Value(lastUpdated);
+  static Insertable<LocalDocumentEntity> custom({
+    Expression<String>? docType,
+    Expression<String>? name,
+    Expression<String>? payload,
+    Expression<DateTime>? lastUpdated,
+    Expression<bool>? isPendingSync,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (docType != null) 'doc_type': docType,
+      if (name != null) 'name': name,
+      if (payload != null) 'payload': payload,
+      if (lastUpdated != null) 'last_updated': lastUpdated,
+      if (isPendingSync != null) 'is_pending_sync': isPendingSync,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalDocumentsCompanion copyWith({
+    Value<String>? docType,
+    Value<String>? name,
+    Value<String>? payload,
+    Value<DateTime>? lastUpdated,
+    Value<bool>? isPendingSync,
+    Value<int>? rowid,
+  }) {
+    return LocalDocumentsCompanion(
+      docType: docType ?? this.docType,
+      name: name ?? this.name,
+      payload: payload ?? this.payload,
+      lastUpdated: lastUpdated ?? this.lastUpdated,
+      isPendingSync: isPendingSync ?? this.isPendingSync,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (docType.present) {
+      map['doc_type'] = Variable<String>(docType.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (payload.present) {
+      map['payload'] = Variable<String>(payload.value);
+    }
+    if (lastUpdated.present) {
+      map['last_updated'] = Variable<DateTime>(lastUpdated.value);
+    }
+    if (isPendingSync.present) {
+      map['is_pending_sync'] = Variable<bool>(isPendingSync.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalDocumentsCompanion(')
+          ..write('docType: $docType, ')
+          ..write('name: $name, ')
+          ..write('payload: $payload, ')
+          ..write('lastUpdated: $lastUpdated, ')
+          ..write('isPendingSync: $isPendingSync, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $DocTypesTable docTypes = $DocTypesTable(this);
   late final $DocFieldsTable docFields = $DocFieldsTable(this);
   late final $SchemaVersionsTable schemaVersions = $SchemaVersionsTable(this);
+  late final $SyncQueueTable syncQueue = $SyncQueueTable(this);
+  late final $LocalDocumentsTable localDocuments = $LocalDocumentsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1340,6 +2166,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     docTypes,
     docFields,
     schemaVersions,
+    syncQueue,
+    localDocuments,
   ];
 }
 
@@ -2472,6 +3300,454 @@ typedef $$SchemaVersionsTableProcessedTableManager =
       SchemaVersionEntity,
       PrefetchHooks Function({bool docTypeName})
     >;
+typedef $$SyncQueueTableCreateCompanionBuilder =
+    SyncQueueCompanion Function({
+      Value<int> id,
+      required String docType,
+      Value<String?> docName,
+      required String action,
+      required String payload,
+      required DateTime timestamp,
+      Value<int> retryCount,
+    });
+typedef $$SyncQueueTableUpdateCompanionBuilder =
+    SyncQueueCompanion Function({
+      Value<int> id,
+      Value<String> docType,
+      Value<String?> docName,
+      Value<String> action,
+      Value<String> payload,
+      Value<DateTime> timestamp,
+      Value<int> retryCount,
+    });
+
+class $$SyncQueueTableFilterComposer
+    extends Composer<_$AppDatabase, $SyncQueueTable> {
+  $$SyncQueueTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get docType => $composableBuilder(
+    column: $table.docType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get docName => $composableBuilder(
+    column: $table.docName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get action => $composableBuilder(
+    column: $table.action,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get timestamp => $composableBuilder(
+    column: $table.timestamp,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get retryCount => $composableBuilder(
+    column: $table.retryCount,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SyncQueueTableOrderingComposer
+    extends Composer<_$AppDatabase, $SyncQueueTable> {
+  $$SyncQueueTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get docType => $composableBuilder(
+    column: $table.docType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get docName => $composableBuilder(
+    column: $table.docName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get action => $composableBuilder(
+    column: $table.action,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get timestamp => $composableBuilder(
+    column: $table.timestamp,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get retryCount => $composableBuilder(
+    column: $table.retryCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SyncQueueTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SyncQueueTable> {
+  $$SyncQueueTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get docType =>
+      $composableBuilder(column: $table.docType, builder: (column) => column);
+
+  GeneratedColumn<String> get docName =>
+      $composableBuilder(column: $table.docName, builder: (column) => column);
+
+  GeneratedColumn<String> get action =>
+      $composableBuilder(column: $table.action, builder: (column) => column);
+
+  GeneratedColumn<String> get payload =>
+      $composableBuilder(column: $table.payload, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get timestamp =>
+      $composableBuilder(column: $table.timestamp, builder: (column) => column);
+
+  GeneratedColumn<int> get retryCount => $composableBuilder(
+    column: $table.retryCount,
+    builder: (column) => column,
+  );
+}
+
+class $$SyncQueueTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SyncQueueTable,
+          SyncQueueEntity,
+          $$SyncQueueTableFilterComposer,
+          $$SyncQueueTableOrderingComposer,
+          $$SyncQueueTableAnnotationComposer,
+          $$SyncQueueTableCreateCompanionBuilder,
+          $$SyncQueueTableUpdateCompanionBuilder,
+          (
+            SyncQueueEntity,
+            BaseReferences<_$AppDatabase, $SyncQueueTable, SyncQueueEntity>,
+          ),
+          SyncQueueEntity,
+          PrefetchHooks Function()
+        > {
+  $$SyncQueueTableTableManager(_$AppDatabase db, $SyncQueueTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SyncQueueTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SyncQueueTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SyncQueueTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> docType = const Value.absent(),
+                Value<String?> docName = const Value.absent(),
+                Value<String> action = const Value.absent(),
+                Value<String> payload = const Value.absent(),
+                Value<DateTime> timestamp = const Value.absent(),
+                Value<int> retryCount = const Value.absent(),
+              }) => SyncQueueCompanion(
+                id: id,
+                docType: docType,
+                docName: docName,
+                action: action,
+                payload: payload,
+                timestamp: timestamp,
+                retryCount: retryCount,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String docType,
+                Value<String?> docName = const Value.absent(),
+                required String action,
+                required String payload,
+                required DateTime timestamp,
+                Value<int> retryCount = const Value.absent(),
+              }) => SyncQueueCompanion.insert(
+                id: id,
+                docType: docType,
+                docName: docName,
+                action: action,
+                payload: payload,
+                timestamp: timestamp,
+                retryCount: retryCount,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SyncQueueTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SyncQueueTable,
+      SyncQueueEntity,
+      $$SyncQueueTableFilterComposer,
+      $$SyncQueueTableOrderingComposer,
+      $$SyncQueueTableAnnotationComposer,
+      $$SyncQueueTableCreateCompanionBuilder,
+      $$SyncQueueTableUpdateCompanionBuilder,
+      (
+        SyncQueueEntity,
+        BaseReferences<_$AppDatabase, $SyncQueueTable, SyncQueueEntity>,
+      ),
+      SyncQueueEntity,
+      PrefetchHooks Function()
+    >;
+typedef $$LocalDocumentsTableCreateCompanionBuilder =
+    LocalDocumentsCompanion Function({
+      required String docType,
+      required String name,
+      required String payload,
+      required DateTime lastUpdated,
+      Value<bool> isPendingSync,
+      Value<int> rowid,
+    });
+typedef $$LocalDocumentsTableUpdateCompanionBuilder =
+    LocalDocumentsCompanion Function({
+      Value<String> docType,
+      Value<String> name,
+      Value<String> payload,
+      Value<DateTime> lastUpdated,
+      Value<bool> isPendingSync,
+      Value<int> rowid,
+    });
+
+class $$LocalDocumentsTableFilterComposer
+    extends Composer<_$AppDatabase, $LocalDocumentsTable> {
+  $$LocalDocumentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get docType => $composableBuilder(
+    column: $table.docType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastUpdated => $composableBuilder(
+    column: $table.lastUpdated,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPendingSync => $composableBuilder(
+    column: $table.isPendingSync,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalDocumentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $LocalDocumentsTable> {
+  $$LocalDocumentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get docType => $composableBuilder(
+    column: $table.docType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastUpdated => $composableBuilder(
+    column: $table.lastUpdated,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPendingSync => $composableBuilder(
+    column: $table.isPendingSync,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalDocumentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LocalDocumentsTable> {
+  $$LocalDocumentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get docType =>
+      $composableBuilder(column: $table.docType, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get payload =>
+      $composableBuilder(column: $table.payload, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastUpdated => $composableBuilder(
+    column: $table.lastUpdated,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isPendingSync => $composableBuilder(
+    column: $table.isPendingSync,
+    builder: (column) => column,
+  );
+}
+
+class $$LocalDocumentsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $LocalDocumentsTable,
+          LocalDocumentEntity,
+          $$LocalDocumentsTableFilterComposer,
+          $$LocalDocumentsTableOrderingComposer,
+          $$LocalDocumentsTableAnnotationComposer,
+          $$LocalDocumentsTableCreateCompanionBuilder,
+          $$LocalDocumentsTableUpdateCompanionBuilder,
+          (
+            LocalDocumentEntity,
+            BaseReferences<
+              _$AppDatabase,
+              $LocalDocumentsTable,
+              LocalDocumentEntity
+            >,
+          ),
+          LocalDocumentEntity,
+          PrefetchHooks Function()
+        > {
+  $$LocalDocumentsTableTableManager(
+    _$AppDatabase db,
+    $LocalDocumentsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalDocumentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LocalDocumentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LocalDocumentsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> docType = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> payload = const Value.absent(),
+                Value<DateTime> lastUpdated = const Value.absent(),
+                Value<bool> isPendingSync = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalDocumentsCompanion(
+                docType: docType,
+                name: name,
+                payload: payload,
+                lastUpdated: lastUpdated,
+                isPendingSync: isPendingSync,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String docType,
+                required String name,
+                required String payload,
+                required DateTime lastUpdated,
+                Value<bool> isPendingSync = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LocalDocumentsCompanion.insert(
+                docType: docType,
+                name: name,
+                payload: payload,
+                lastUpdated: lastUpdated,
+                isPendingSync: isPendingSync,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalDocumentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $LocalDocumentsTable,
+      LocalDocumentEntity,
+      $$LocalDocumentsTableFilterComposer,
+      $$LocalDocumentsTableOrderingComposer,
+      $$LocalDocumentsTableAnnotationComposer,
+      $$LocalDocumentsTableCreateCompanionBuilder,
+      $$LocalDocumentsTableUpdateCompanionBuilder,
+      (
+        LocalDocumentEntity,
+        BaseReferences<
+          _$AppDatabase,
+          $LocalDocumentsTable,
+          LocalDocumentEntity
+        >,
+      ),
+      LocalDocumentEntity,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2482,4 +3758,8 @@ class $AppDatabaseManager {
       $$DocFieldsTableTableManager(_db, _db.docFields);
   $$SchemaVersionsTableTableManager get schemaVersions =>
       $$SchemaVersionsTableTableManager(_db, _db.schemaVersions);
+  $$SyncQueueTableTableManager get syncQueue =>
+      $$SyncQueueTableTableManager(_db, _db.syncQueue);
+  $$LocalDocumentsTableTableManager get localDocuments =>
+      $$LocalDocumentsTableTableManager(_db, _db.localDocuments);
 }
