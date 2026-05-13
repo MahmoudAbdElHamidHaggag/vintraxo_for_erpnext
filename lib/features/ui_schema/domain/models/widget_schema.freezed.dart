@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$WidgetSchema {
 
  String get id; WidgetType get type; String get label; bool get isRequired; bool get isReadOnly; bool get isHidden; String? get options;// For Link targets or Select options
- String? get defaultValue; String? get description; String? get dependsOn;
+ String? get defaultValue; String? get description; String? get dependsOn; List<WidgetSchema>? get children;
 /// Create a copy of WidgetSchema
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $WidgetSchemaCopyWith<WidgetSchema> get copyWith => _$WidgetSchemaCopyWithImpl<W
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WidgetSchema&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.label, label) || other.label == label)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.isReadOnly, isReadOnly) || other.isReadOnly == isReadOnly)&&(identical(other.isHidden, isHidden) || other.isHidden == isHidden)&&(identical(other.options, options) || other.options == options)&&(identical(other.defaultValue, defaultValue) || other.defaultValue == defaultValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.dependsOn, dependsOn) || other.dependsOn == dependsOn));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WidgetSchema&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.label, label) || other.label == label)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.isReadOnly, isReadOnly) || other.isReadOnly == isReadOnly)&&(identical(other.isHidden, isHidden) || other.isHidden == isHidden)&&(identical(other.options, options) || other.options == options)&&(identical(other.defaultValue, defaultValue) || other.defaultValue == defaultValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.dependsOn, dependsOn) || other.dependsOn == dependsOn)&&const DeepCollectionEquality().equals(other.children, children));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,label,isRequired,isReadOnly,isHidden,options,defaultValue,description,dependsOn);
+int get hashCode => Object.hash(runtimeType,id,type,label,isRequired,isReadOnly,isHidden,options,defaultValue,description,dependsOn,const DeepCollectionEquality().hash(children));
 
 @override
 String toString() {
-  return 'WidgetSchema(id: $id, type: $type, label: $label, isRequired: $isRequired, isReadOnly: $isReadOnly, isHidden: $isHidden, options: $options, defaultValue: $defaultValue, description: $description, dependsOn: $dependsOn)';
+  return 'WidgetSchema(id: $id, type: $type, label: $label, isRequired: $isRequired, isReadOnly: $isReadOnly, isHidden: $isHidden, options: $options, defaultValue: $defaultValue, description: $description, dependsOn: $dependsOn, children: $children)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $WidgetSchemaCopyWith<$Res>  {
   factory $WidgetSchemaCopyWith(WidgetSchema value, $Res Function(WidgetSchema) _then) = _$WidgetSchemaCopyWithImpl;
 @useResult
 $Res call({
- String id, WidgetType type, String label, bool isRequired, bool isReadOnly, bool isHidden, String? options, String? defaultValue, String? description, String? dependsOn
+ String id, WidgetType type, String label, bool isRequired, bool isReadOnly, bool isHidden, String? options, String? defaultValue, String? description, String? dependsOn, List<WidgetSchema>? children
 });
 
 
@@ -66,7 +66,7 @@ class _$WidgetSchemaCopyWithImpl<$Res>
 
 /// Create a copy of WidgetSchema
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? label = null,Object? isRequired = null,Object? isReadOnly = null,Object? isHidden = null,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? dependsOn = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? label = null,Object? isRequired = null,Object? isReadOnly = null,Object? isHidden = null,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? dependsOn = freezed,Object? children = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -78,7 +78,8 @@ as bool,options: freezed == options ? _self.options : options // ignore: cast_nu
 as String?,defaultValue: freezed == defaultValue ? _self.defaultValue : defaultValue // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,dependsOn: freezed == dependsOn ? _self.dependsOn : dependsOn // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,children: freezed == children ? _self.children : children // ignore: cast_nullable_to_non_nullable
+as List<WidgetSchema>?,
   ));
 }
 
@@ -163,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  WidgetType type,  String label,  bool isRequired,  bool isReadOnly,  bool isHidden,  String? options,  String? defaultValue,  String? description,  String? dependsOn)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  WidgetType type,  String label,  bool isRequired,  bool isReadOnly,  bool isHidden,  String? options,  String? defaultValue,  String? description,  String? dependsOn,  List<WidgetSchema>? children)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WidgetSchema() when $default != null:
-return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnly,_that.isHidden,_that.options,_that.defaultValue,_that.description,_that.dependsOn);case _:
+return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnly,_that.isHidden,_that.options,_that.defaultValue,_that.description,_that.dependsOn,_that.children);case _:
   return orElse();
 
 }
@@ -184,10 +185,10 @@ return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnl
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  WidgetType type,  String label,  bool isRequired,  bool isReadOnly,  bool isHidden,  String? options,  String? defaultValue,  String? description,  String? dependsOn)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  WidgetType type,  String label,  bool isRequired,  bool isReadOnly,  bool isHidden,  String? options,  String? defaultValue,  String? description,  String? dependsOn,  List<WidgetSchema>? children)  $default,) {final _that = this;
 switch (_that) {
 case _WidgetSchema():
-return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnly,_that.isHidden,_that.options,_that.defaultValue,_that.description,_that.dependsOn);case _:
+return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnly,_that.isHidden,_that.options,_that.defaultValue,_that.description,_that.dependsOn,_that.children);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +205,10 @@ return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnl
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  WidgetType type,  String label,  bool isRequired,  bool isReadOnly,  bool isHidden,  String? options,  String? defaultValue,  String? description,  String? dependsOn)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  WidgetType type,  String label,  bool isRequired,  bool isReadOnly,  bool isHidden,  String? options,  String? defaultValue,  String? description,  String? dependsOn,  List<WidgetSchema>? children)?  $default,) {final _that = this;
 switch (_that) {
 case _WidgetSchema() when $default != null:
-return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnly,_that.isHidden,_that.options,_that.defaultValue,_that.description,_that.dependsOn);case _:
+return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnly,_that.isHidden,_that.options,_that.defaultValue,_that.description,_that.dependsOn,_that.children);case _:
   return null;
 
 }
@@ -219,7 +220,7 @@ return $default(_that.id,_that.type,_that.label,_that.isRequired,_that.isReadOnl
 @JsonSerializable()
 
 class _WidgetSchema implements WidgetSchema {
-  const _WidgetSchema({required this.id, required this.type, required this.label, this.isRequired = false, this.isReadOnly = false, this.isHidden = false, this.options, this.defaultValue, this.description, this.dependsOn});
+  const _WidgetSchema({required this.id, required this.type, required this.label, this.isRequired = false, this.isReadOnly = false, this.isHidden = false, this.options, this.defaultValue, this.description, this.dependsOn, final  List<WidgetSchema>? children}): _children = children;
   factory _WidgetSchema.fromJson(Map<String, dynamic> json) => _$WidgetSchemaFromJson(json);
 
 @override final  String id;
@@ -233,6 +234,15 @@ class _WidgetSchema implements WidgetSchema {
 @override final  String? defaultValue;
 @override final  String? description;
 @override final  String? dependsOn;
+ final  List<WidgetSchema>? _children;
+@override List<WidgetSchema>? get children {
+  final value = _children;
+  if (value == null) return null;
+  if (_children is EqualUnmodifiableListView) return _children;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of WidgetSchema
 /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WidgetSchema&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.label, label) || other.label == label)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.isReadOnly, isReadOnly) || other.isReadOnly == isReadOnly)&&(identical(other.isHidden, isHidden) || other.isHidden == isHidden)&&(identical(other.options, options) || other.options == options)&&(identical(other.defaultValue, defaultValue) || other.defaultValue == defaultValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.dependsOn, dependsOn) || other.dependsOn == dependsOn));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WidgetSchema&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.label, label) || other.label == label)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.isReadOnly, isReadOnly) || other.isReadOnly == isReadOnly)&&(identical(other.isHidden, isHidden) || other.isHidden == isHidden)&&(identical(other.options, options) || other.options == options)&&(identical(other.defaultValue, defaultValue) || other.defaultValue == defaultValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.dependsOn, dependsOn) || other.dependsOn == dependsOn)&&const DeepCollectionEquality().equals(other._children, _children));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,label,isRequired,isReadOnly,isHidden,options,defaultValue,description,dependsOn);
+int get hashCode => Object.hash(runtimeType,id,type,label,isRequired,isReadOnly,isHidden,options,defaultValue,description,dependsOn,const DeepCollectionEquality().hash(_children));
 
 @override
 String toString() {
-  return 'WidgetSchema(id: $id, type: $type, label: $label, isRequired: $isRequired, isReadOnly: $isReadOnly, isHidden: $isHidden, options: $options, defaultValue: $defaultValue, description: $description, dependsOn: $dependsOn)';
+  return 'WidgetSchema(id: $id, type: $type, label: $label, isRequired: $isRequired, isReadOnly: $isReadOnly, isHidden: $isHidden, options: $options, defaultValue: $defaultValue, description: $description, dependsOn: $dependsOn, children: $children)';
 }
 
 
@@ -267,7 +277,7 @@ abstract mixin class _$WidgetSchemaCopyWith<$Res> implements $WidgetSchemaCopyWi
   factory _$WidgetSchemaCopyWith(_WidgetSchema value, $Res Function(_WidgetSchema) _then) = __$WidgetSchemaCopyWithImpl;
 @override @useResult
 $Res call({
- String id, WidgetType type, String label, bool isRequired, bool isReadOnly, bool isHidden, String? options, String? defaultValue, String? description, String? dependsOn
+ String id, WidgetType type, String label, bool isRequired, bool isReadOnly, bool isHidden, String? options, String? defaultValue, String? description, String? dependsOn, List<WidgetSchema>? children
 });
 
 
@@ -284,7 +294,7 @@ class __$WidgetSchemaCopyWithImpl<$Res>
 
 /// Create a copy of WidgetSchema
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? label = null,Object? isRequired = null,Object? isReadOnly = null,Object? isHidden = null,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? dependsOn = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? label = null,Object? isRequired = null,Object? isReadOnly = null,Object? isHidden = null,Object? options = freezed,Object? defaultValue = freezed,Object? description = freezed,Object? dependsOn = freezed,Object? children = freezed,}) {
   return _then(_WidgetSchema(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -296,7 +306,8 @@ as bool,options: freezed == options ? _self.options : options // ignore: cast_nu
 as String?,defaultValue: freezed == defaultValue ? _self.defaultValue : defaultValue // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,dependsOn: freezed == dependsOn ? _self.dependsOn : dependsOn // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,children: freezed == children ? _self._children : children // ignore: cast_nullable_to_non_nullable
+as List<WidgetSchema>?,
   ));
 }
 

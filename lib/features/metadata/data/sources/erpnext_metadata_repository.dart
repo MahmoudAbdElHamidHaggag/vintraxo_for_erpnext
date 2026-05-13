@@ -44,4 +44,29 @@ class ERPNextMetadataRepository implements MetadataRepository {
       throw Exception('Failed to fetch DocType $docTypeName: $e');
     }
   }
+
+  @override
+  Future<List<Map<String, dynamic>>> searchLink({
+    required String docTypeName,
+    required String query,
+  }) async {
+    try {
+      final response = await dio.post(
+        '/api/method/frappe.desk.search.search_link',
+        data: {
+          'txt': query,
+          'doctype': docTypeName,
+          'ignore_user_permissions': 0,
+        },
+      );
+
+      if (response.statusCode == 200 && response.data['results'] != null) {
+        final List<dynamic> results = response.data['results'];
+        return results.map((r) => Map<String, dynamic>.from(r)).toList();
+      }
+      return [];
+    } catch (e) {
+      throw Exception('Failed to search link for $docTypeName: $e');
+    }
+  }
 }

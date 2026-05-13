@@ -18,6 +18,9 @@ _WidgetSchema _$WidgetSchemaFromJson(Map<String, dynamic> json) =>
       defaultValue: json['defaultValue'] as String?,
       description: json['description'] as String?,
       dependsOn: json['dependsOn'] as String?,
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => WidgetSchema.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$WidgetSchemaToJson(_WidgetSchema instance) =>
@@ -32,6 +35,7 @@ Map<String, dynamic> _$WidgetSchemaToJson(_WidgetSchema instance) =>
       'defaultValue': instance.defaultValue,
       'description': instance.description,
       'dependsOn': instance.dependsOn,
+      'children': instance.children,
     };
 
 const _$WidgetTypeEnumMap = {
@@ -46,5 +50,9 @@ const _$WidgetTypeEnumMap = {
   WidgetType.table: 'table',
   WidgetType.select: 'select',
   WidgetType.currency: 'currency',
+  WidgetType.section: 'section',
+  WidgetType.column: 'column',
+  WidgetType.tab: 'tab',
+  WidgetType.heading: 'heading',
   WidgetType.unknown: 'unknown',
 };

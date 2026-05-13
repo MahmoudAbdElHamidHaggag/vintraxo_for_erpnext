@@ -3,9 +3,83 @@ import 'package:vintraxo_for_erpnext/features/metadata/domain/models/doc_type.da
 import 'package:vintraxo_for_erpnext/features/ui_schema/domain/models/widget_schema.dart';
 
 class SchemaTranslator {
-  /// Translates an entire ERPNext DocType to a list of WidgetSchemas
+  /// Translates an entire ERPNext DocType to a list of WidgetSchemas,
+  /// grouping fields into Sections and Columns based on ERPNext's layout breaks.
   static List<WidgetSchema> translateDocType(DocType docType) {
-    return docType.fields.map((f) => translateField(f)).toList();
+    final List<WidgetSchema> rootWidgets = [];
+    WidgetSchema? currentSection;
+    WidgetSchema? currentColumn;
+
+    for (final field in docType.fields) {
+      final widget = translateField(field);
+
+      if (widget.type == WidgetType.section) {
+        currentSection = widget.copyWith(children: []);
+        currentColumn = null; // Reset column when a new section starts
+        rootWidgets.add(currentSection);
+      } else if (widget.type == WidgetType.column) {
+        if (currentSection == null) {
+          // If no section exists yet, create a default one
+          currentSection = WidgetSchema(
+            id: 'default_section_${rootWidgets.length}',
+            type: WidgetType.section,
+            label: '',
+            children: [],
+          );
+          rootWidgets.add(currentSection);
+        }
+        currentColumn = widget.copyWith(children: []);
+        
+        // Add column to section
+        final updatedSection = currentSection.copyWith(
+          children: [...?currentSection.children, currentColumn],
+        );
+        
+        // Update reference in rootWidgets
+        final index = rootWidgets.indexOf(currentSection);
+        rootWidgets[index] = updatedSection;
+        currentSection = updatedSection;
+      } else {
+        // Regular field
+        if (currentColumn != null) {
+          // Add to current column
+          final updatedColumn = currentColumn.copyWith(
+            children: [...?currentColumn.children, widget],
+          );
+          
+          // Update column reference in section
+          final sectionIndex = rootWidgets.indexOf(currentSection!);
+          final columnIndex = currentSection.children!.indexOf(currentColumn);
+          final updatedChildren = List<WidgetSchema>.from(currentSection.children!);
+          updatedChildren[columnIndex] = updatedColumn;
+          
+          final updatedSection = currentSection.copyWith(children: updatedChildren);
+          rootWidgets[sectionIndex] = updatedSection;
+          
+          currentSection = updatedSection;
+          currentColumn = updatedColumn;
+        } else if (currentSection != null) {
+          // Add directly to section (if no columns exist yet)
+          final updatedSection = currentSection.copyWith(
+            children: [...?currentSection.children, widget],
+          );
+          final index = rootWidgets.indexOf(currentSection);
+          rootWidgets[index] = updatedSection;
+          currentSection = updatedSection;
+        } else {
+          // No section or column, add to root (maybe wrap in a default section)
+          currentSection = WidgetSchema(
+            id: 'default_section_top',
+            type: WidgetType.section,
+            label: '',
+            children: [widget],
+          );
+          rootWidgets.add(currentSection);
+        }
+      }
+    }
+
+    return rootWidgets;
   }
 
   /// Translates a single ERPNext DocField into a WidgetSchema
@@ -27,6 +101,14 @@ class SchemaTranslator {
   /// Maps ERPNext specific field types to our abstract WidgetType
   static WidgetType _mapFieldType(String erpNextType) {
     switch (erpNextType) {
+      case 'Section Break':
+        return WidgetType.section;
+      case 'Column Break':
+        return WidgetType.column;
+      case 'Tab Break':
+        return WidgetType.tab;
+      case 'Heading':
+        return WidgetType.heading;
       case 'Data':
       case 'Read Only':
       case 'Password':
@@ -61,8 +143,6 @@ class SchemaTranslator {
         return WidgetType.table;
       case 'Select':
         return WidgetType.select;
-      case 'Section Break':
-      case 'Column Break':
       case 'HTML':
       case 'Button':
       case 'Image':

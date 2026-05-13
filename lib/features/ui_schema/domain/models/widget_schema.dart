@@ -17,11 +17,15 @@ enum WidgetType {
   table,
   select,
   currency,
+  section,
+  column,
+  tab,
+  heading,
   unknown
 }
 
 @freezed
-abstract class WidgetSchema with _$WidgetSchema {
+class WidgetSchema with _$WidgetSchema {
   const factory WidgetSchema({
     required String id,
     required WidgetType type,
@@ -33,6 +37,7 @@ abstract class WidgetSchema with _$WidgetSchema {
     String? defaultValue,
     String? description,
     String? dependsOn,
+    List<WidgetSchema>? children,
   }) = _WidgetSchema;
 
   factory WidgetSchema.fromJson(Map<String, dynamic> json) => _$WidgetSchemaFromJson(json);

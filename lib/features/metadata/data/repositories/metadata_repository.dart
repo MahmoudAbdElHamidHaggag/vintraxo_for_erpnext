@@ -7,4 +7,10 @@ abstract class MetadataRepository {
 
   /// Fetches the DocType metadata including its fields.
   Future<DocType> getDocType(String docTypeName);
+
+  /// Searches for records in a linked DocType.
+  Future<List<Map<String, dynamic>>> searchLink({
+    required String docTypeName,
+    required String query,
+  });
 }
